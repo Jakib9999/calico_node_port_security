@@ -1,0 +1,30 @@
+apiVersion: projectcalico.org/v3
+kind: GlobalNetworkPolicy
+metadata:
+  name: allow-nodeport
+spec:
+  preDNAT: true
+  applyOnForward: true
+  order: 10
+  ingress:
+    - action: Allow
+      protocol: TCP
+      source:
+       nets:
+       - 192.168.33.0/24
+         #- 172.42.42.0/24
+      destination:
+        selector: has(kubernetes-host)
+        ports: [32410]
+    - action: Allow
+      protocol: TCP
+      source:
+       nets:
+         #- 192.168.33.0/24
+       - 172.42.42.0/24
+      destination:
+        selector: has(kubernetes-host)
+        ports: [32400]
+
+    - action: Deny
+  selector: has(kubernetes-host)

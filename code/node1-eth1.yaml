@@ -1,0 +1,11 @@
+apiVersion: projectcalico.org/v3
+kind: HostEndpoint
+metadata:
+  name: node1-eth1
+  labels:
+    kubernetes-host: ingress
+spec:
+  interfaceName: enp0s9
+  node: jahed-vm
+  expectedIPs:
+    - 172.42.42.42

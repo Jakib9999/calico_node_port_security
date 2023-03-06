@@ -1,0 +1,18 @@
+apiVersion: projectcalico.org/v3
+kind: NetworkPolicy
+metadata:
+  name: allow-tomcat-ingress
+  namespace: default
+spec:
+  selector: app == 'tomcatinfra'
+  types:
+  - Ingress
+  ingress:
+  - action: Allow
+    source:
+      nets:
+       # - 192.168.33.0/24
+      - 172.42.42.0/24
+      
+    destination:
+      selector: app == 'tomcatinfra'
